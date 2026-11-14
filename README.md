@@ -1,8 +1,17 @@
-# ASCII Studio
+<p align="center"><img src="src-tauri/app-icon.svg" width="112" alt="ASCII Studio logo"></p>
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.png">
+    <img src="docs/wordmark-light.png" width="360" alt="ASCII Studio">
+  </picture>
+</h1>
+<p align="center">Turn any image into animated ASCII art, then save it as a PNG or a looping GIF.</p>
 
-Turn any image into animated ASCII art, then save it as a PNG or a looping GIF.
+<p align="center"><img src="docs/screenshot.png" alt="ASCII Studio converting Vermeer's Girl with a Pearl Earring into ASCII art"></p>
 
 Runs in the browser or as a desktop app (Windows, macOS, Linux). Images never leave your device.
+
+**Try it live: [ascii-react.vercel.app](https://ascii-react.vercel.app)**
 
 ## Features
 
@@ -41,7 +50,7 @@ You need [Node.js](https://nodejs.org) 20 or newer.
 ```bash
 npm install
 npm run dev      # dev server on http://localhost:5173
-npm run build    # static site in dist/ (host it anywhere, e.g. Vercel or Netlify)
+npm run build    # static site in dist/
 ```
 
 ### Desktop app
@@ -57,9 +66,6 @@ npm run desktop:build    # build an installer for your OS
 
 The installer is written to `src-tauri/target/release/bundle/`.
 
-### Releases
-
-Pushing a tag like `v1.0.0` runs `.github/workflows/release.yml`. It builds installers for Windows (`.msi`/`.exe`), macOS (`.dmg`, Intel + Apple Silicon) and Linux (`.AppImage`/`.deb`) and attaches them to a draft GitHub Release.
 
 ## How it works
 
@@ -82,6 +88,10 @@ Every effect is periodic in a `phase` value that runs from 0 to 1 over one loop.
 npm test         # engine unit tests (conversion + seamless-loop checks)
 ```
 
+## Contributing
+
+Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
-MIT
+[MIT](LICENSE) © Ollie Frost
