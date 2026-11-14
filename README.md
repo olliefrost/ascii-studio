@@ -1,78 +1,86 @@
-# ASCII React
+# ASCII Studio
 
-A React application that converts images to animated ASCII art with smooth, organic row-by-row animations.
-Coded for testing with Cursor.
+Turn any image into animated ASCII art, then save it as a PNG or a looping GIF.
+
+Runs in the browser or as a desktop app (Windows, macOS, Linux). Images never leave your device.
 
 ## Features
 
-- 🖼️ Image to ASCII conversion with customizable resolution
-- 🎨 Colored ASCII art output
-- ✨ Smooth row-by-row fade-in animation
-- 🌊 Organic left-right floating animation with independent row movements
-- 📱 Responsive design with mobile optimizations
-- ♿ Accessibility support (reduced motion)
+- **Load images any way you like:** drop, paste (Ctrl/⌘+V), or pick a file
+- **Live preview** on a canvas, adjusted in real time
+- **Motion effects**, each with its own controls:
+  - **Row drift:** rows float left and right independently
+  - **Wave:** horizontal, vertical, or a radial ripple
+  - **Glitch:** bands of rows jump sideways, with optional RGB split
+  - **Scramble:** glyphs flicker to random characters
+- **Speed** control, plus presets (Still, Calm, Wavy, Ripple, Glitchy, Chaos)
+- **Image controls:** detail (columns), character set (including your own), contrast, brightness, invert, colour from the image or a single colour, background, font size, line height, padding
+- **Export:**
+  - **Copy:** the current frame as an image on your clipboard
+  - **PNG:** the current frame at 1×, 2× or 4×
+  - **GIF:** exactly one loop of the animation, so it repeats with no visible jump
+- Settings are remembered between sessions
 
-## Getting Started
+### Shortcuts
 
-### Prerequisites
+| Key | Action |
+| --- | --- |
+| Space | Play / pause |
+| Ctrl/⌘ + O | Open image |
+| Ctrl/⌘ + V | Paste image |
+| Ctrl/⌘ + C | Copy current frame |
+| Ctrl/⌘ + S | Save PNG |
+| Ctrl/⌘ + Shift + S | Save GIF |
 
-- Node.js (v14 or higher)
-- npm or yarn
+## Build from source
 
-### Installation
+You need [Node.js](https://nodejs.org) 20 or newer.
+
+### Web app
 
 ```bash
 npm install
+npm run dev      # dev server on http://localhost:5173
+npm run build    # static site in dist/ (host it anywhere, e.g. Vercel or Netlify)
 ```
 
-### Running the App
+### Desktop app
+
+You also need [Rust](https://rustup.rs) and [Tauri's system prerequisites](https://v2.tauri.app/start/prerequisites/). On Windows and macOS that's usually nothing extra. On Debian/Ubuntu:
+`sudo apt install libwebkit2gtk-4.1-dev build-essential libssl-dev libayatana-appindicator3-dev librsvg2-dev`.
 
 ```bash
-npm start
+npm install
+npm run desktop          # run the desktop app in dev mode
+npm run desktop:build    # build an installer for your OS
 ```
 
-The app will open at [http://localhost:3000](http://localhost:3000)
+The installer is written to `src-tauri/target/release/bundle/`.
 
-### Building for Production
+### Releases
+
+Pushing a tag like `v1.0.0` runs `.github/workflows/release.yml`. It builds installers for Windows (`.msi`/`.exe`), macOS (`.dmg`, Intel + Apple Silicon) and Linux (`.AppImage`/`.deb`) and attaches them to a draft GitHub Release.
+
+## How it works
+
+```
+src/
+  engine/
+    convert.ts     image pixels → glyph grid (one pixel per cell, brightness → character ramp)
+    effects.ts     drift / wave / glitch / scramble, all pure functions of loop "phase"
+    render.ts      draws a frame to a canvas (used by the preview, PNG and GIF)
+    gif.ts         renders one loop of frames; gif.worker.ts encodes them with gifenc
+  lib/             image loading, save/copy (browser vs. desktop)
+  state/           settings, presets, persistence
+  components/      UI
+src-tauri/         desktop shell
+```
+
+Every effect is periodic in a `phase` value that runs from 0 to 1 over one loop. Sine-based motion completes whole cycles, and random effects use a seeded hash of the time step. Phase 0 and phase 1 therefore produce identical frames, which is why exported GIFs loop seamlessly. The speed setting only changes how many seconds one loop lasts.
 
 ```bash
-npm run build
+npm test         # engine unit tests (conversion + seamless-loop checks)
 ```
-
-## Usage
-
-1. Place your image file in the `public` folder
-2. Update the `imageSrc` prop in `src/App.tsx` to point to your image
-3. The app will automatically convert the image to ASCII art and display it with animations
-
-### Changing the Source Image
-
-Use any image the browser can load (JPG, PNG, GIF, WebP, etc.), then:
-
-1. Add or copy your image into the `public/` directory (e.g. `public/my-photo.png`). Nested folders also work (`public/images/selfie.jpg`).
-2. Open `src/App.tsx` and update the `imageSrc` prop passed to `AsciiDisplay`. Use a root-relative path (e.g. `"/my-photo.png"` or `"/images/selfie.jpg"`).
-3. If the dev server was not already running, start it with `npm start`. Otherwise it will hot-reload automatically.
-4. Refresh the browser if you do not see the change right away; cached images can linger, so appending a query string like `"/my-photo.png?v=2"` helps.
-
-Tips:
-- High-contrast images produce clearer ASCII art.
-- Prefer files under ~2 MB for quicker conversion.
-- If you see an error overlay, double-check the filename and folder path.
-
-## Customization
-
-You can customize the ASCII conversion in `src/components/AsciiDisplay.tsx`:
-
-- `resolution`: Controls the density of ASCII characters (default: 0.15)
-- `grayscale`: Toggle between colored and grayscale output
-- `charSet`: Choose from different character sets (standard, detailed, blocks, minimal)
-- `aspectRatioX/Y`: Adjust horizontal and vertical stretch factors
-
-## Technologies Used
-
-- React 19
-- TypeScript
-- Create React App
 
 ## License
 
