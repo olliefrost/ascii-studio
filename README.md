@@ -1,10 +1,17 @@
 <p align="center"><img src="src-tauri/app-icon.svg" width="112" alt="ASCII Studio logo"></p>
-<h1 align="center">ASCII Studio</h1>
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.png">
+    <img src="docs/wordmark-light.png" width="360" alt="ASCII Studio">
+  </picture>
+</h1>
 <p align="center">Turn any image into animated ASCII art, then save it as a PNG or a looping GIF.</p>
 
 <p align="center"><img src="docs/screenshot.png" alt="ASCII Studio converting Vermeer's Girl with a Pearl Earring into ASCII art"></p>
 
 Runs in the browser or as a desktop app (Windows, macOS, Linux). Images never leave your device.
+
+**Try it live: [ascii-react.vercel.app](https://ascii-react.vercel.app)**
 
 ## Features
 
@@ -43,7 +50,7 @@ You need [Node.js](https://nodejs.org) 20 or newer.
 ```bash
 npm install
 npm run dev      # dev server on http://localhost:5173
-npm run build    # static site in dist/ (host it anywhere, e.g. Vercel or Netlify)
+npm run build    # static site in dist/
 ```
 
 ### Desktop app
