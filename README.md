@@ -66,9 +66,6 @@ npm run desktop:build    # build an installer for your OS
 
 The installer is written to `src-tauri/target/release/bundle/`.
 
-### Releases
-
-Pushing a tag like `v1.0.0` runs `.github/workflows/release.yml`. It builds installers for Windows (`.msi`/`.exe`), macOS (`.dmg`, Intel + Apple Silicon) and Linux (`.AppImage`/`.deb`) and attaches them to a draft GitHub Release.
 
 ## How it works
 
@@ -91,6 +88,10 @@ Every effect is periodic in a `phase` value that runs from 0 to 1 over one loop.
 npm test         # engine unit tests (conversion + seamless-loop checks)
 ```
 
+## Contributing
+
+Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
-MIT
+[MIT](LICENSE) © Ollie Frost
