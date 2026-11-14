@@ -1,6 +1,8 @@
-# ASCII Studio
+<p align="center"><img src="src-tauri/app-icon.svg" width="112" alt="ASCII Studio logo"></p>
+<h1 align="center">ASCII Studio</h1>
+<p align="center">Turn any image into animated ASCII art, then save it as a PNG or a looping GIF.</p>
 
-Turn any image into animated ASCII art, then save it as a PNG or a looping GIF.
+<p align="center"><img src="docs/screenshot.png" alt="ASCII Studio converting Vermeer's Girl with a Pearl Earring into ASCII art"></p>
 
 Runs in the browser or as a desktop app (Windows, macOS, Linux). Images never leave your device.
 
